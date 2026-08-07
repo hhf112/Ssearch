@@ -1,3 +1,4 @@
+[![tests](https://github.com/hhf112/ssearch/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/hhf112/ssearch/actions/workflows/c-cpp.yml) </br>
 will add more searching algorithms other than Boyre Moore.
 
 # Tests
