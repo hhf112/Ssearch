@@ -50,7 +50,7 @@ TEST(ssearch_test, threadedSearchFile) {
 	std::atomic<int32_t> cnt = 0;
 	ASSERT_EQ(search.threadedSearchFile(
 				  "../100mb-example-file.txt", "example",
-				  [&cnt](ssearch::Pos &&pos) { ++cnt; }, 20, 2 * MB),
+				  [&cnt](ssearch::Pos &&pos) { ++cnt; }, std::thread::hardware_concurrency(), 2 * MB),
 			  OK);
 	ASSERT_EQ(cnt >= 4'369'066, true);
 	std::cerr << "cnt = " << cnt << '\n';

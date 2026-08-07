@@ -113,19 +113,19 @@ class BlockingThreadPool {
 		try {
 			std::unique_lock<std::mutex> task_q_lock(task_q_mtx_);
 
-			DEBUG("waitForTasksCompleteAndHarvestThreads(): waiting for working_thread_cnt_ and task_q.size()\n");
+			// DEBUG("waitForTasksCompleteAndHarvestThreads(): waiting for working_thread_cnt_ and task_q.size()\n");
 			ongoing_work_.wait(task_q_lock, [this]() {
 				return working_threads_cnt_ == 0 && task_q_.size() == 0;
 			});
 
-			DEBUG("waitForTasksCompleteAndHarvestThreads(): working threads = 0, task q empty.\n");
+			// DEBUG("waitForTasksCompleteAndHarvestThreads(): working threads = 0, task q empty.\n");
 
 			kill_all_threads_.store(true);
 			task_available_.notify_all();
 
 			alive_threads_.wait(task_q_lock, [this] { return active_thread_cnt_ == 0; });
 
-			DEBUG("waitForTasksCompleteAndHarvestThreads(): active_thread_cnt = 0\n");
+			// DEBUG("waitForTasksCompleteAndHarvestThreads(): active_thread_cnt = 0\n");
 
 			for (auto &worker : threads_vec_) {
 				if (worker.joinable()) {
